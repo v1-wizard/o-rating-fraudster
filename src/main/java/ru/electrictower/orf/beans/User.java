@@ -11,8 +11,15 @@ import static lombok.AccessLevel.PUBLIC;
 @AllArgsConstructor(access = PUBLIC)
 public class User
 {
-    @Getter
-    private String name;
-    @Getter
-    private String password;
+        @Getter
+        private String name;
+        @Getter
+        private String password;
+
+        private boolean isLogin;
+
+        public boolean isLogin()
+        {
+                return isLogin;
+        }
 }
