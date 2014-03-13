@@ -13,12 +13,12 @@ import static lombok.AccessLevel.*;
 @AllArgsConstructor(access = PUBLIC)
 public class Article
 {
-    @Getter
-    private String      title;
-    @Getter
-    private String      description;
-    @Getter
-    private String      section;
-    @Getter
-    private InputStream image;
+        @Getter
+        private String title;
+        @Getter
+        private String description;
+        @Getter
+        private String section;
+        @Getter
+        private InputStream image;
 }

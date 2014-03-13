@@ -15,7 +15,6 @@ public class User
         private String name;
         @Getter
         private String password;
-
         private boolean isLogin;
 
         public boolean isLogin()
