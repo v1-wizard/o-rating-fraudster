@@ -1,5 +1,6 @@
 package ru.electrictower.orf;
 
+import ru.electrictower.orf.mvc.Model;
 import ru.electrictower.orf.mvc.View;
 
 /**
@@ -8,9 +9,11 @@ import ru.electrictower.orf.mvc.View;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws InterruptedException
     {
-            View view = new View();
+            Model model = new Model();
+            model.startRssThread();
+            View view = new View(model);
             view.start();
     }
 }

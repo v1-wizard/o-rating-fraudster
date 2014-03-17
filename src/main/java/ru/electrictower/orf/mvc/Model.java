@@ -1,22 +1,25 @@
 package ru.electrictower.orf.mvc;
 
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 import lombok.Getter;
 import ru.electrictower.orf.beans.Article;
 import ru.electrictower.orf.http.HttpCore;
-import ru.electrictower.orf.http.Response;
 
-import java.net.URI;
+import java.net.URL;
 
 /**
  * @author Aliaksei Boole
  */
 public class Model
 {
-        private boolean rssRun;
+        private volatile boolean rssRun = true;
         private final HttpCore httpCore = new HttpCore();
         @Getter
         private Article lastArticle;
         private boolean isNewArticle;
+
 
         public boolean isNewArticle()
         {
@@ -25,8 +28,7 @@ public class Model
 
         public void startRssThread()
         {
-                rssRun = true;
-                new Runnable()
+                new Thread()
                 {
                         @Override
                         public void run()
@@ -35,12 +37,11 @@ public class Model
                                 {
                                         try
                                         {
-                                                Response response = httpCore.executeGetRequest(new URI("http://www.onliner.by/feed"));
-                                                Article actualArticle = getActualArticle(response);
-                                                if (!lastArticle.equals(actualArticle))
-                                                {
-                                                        lastArticle = actualArticle;
-                                                }
+                                                URL feedUrl = new URL("http://www.onliner.by/feed");
+                                                SyndFeedInput input = new SyndFeedInput();
+                                                SyndFeed feed = input.build(new XmlReader(feedUrl));
+                                                System.out.println(feed);
+                                                Thread.sleep(10000);
                                         }
                                         catch (Exception e)
                                         {
@@ -49,12 +50,7 @@ public class Model
                                         }
                                 }
                         }
-                }.run();
-        }
-
-        private Article getActualArticle(Response response)
-        {
-                return null;
+                }.start();
         }
 
         public void stopRssThread()

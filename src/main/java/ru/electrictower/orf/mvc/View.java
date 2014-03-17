@@ -2,6 +2,7 @@ package ru.electrictower.orf.mvc;
 
 import static org.eclipse.swt.SWT.*;
 
+import lombok.RequiredArgsConstructor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
@@ -19,9 +20,17 @@ public class View
         private final static String ICON_FILE = "icon.png";
         private final static String TRAY_MENU_EXIT = "Exit";
         private final static String TRAY_MENU_OPEN = "Open";
+        private final static String STOP_RSS = "Stop RSS";
 
         private final static int X_WINDOW_SIZE = 400;
         private final static int Y_WINDOW_SIZE = 400;
+
+        private Model model;
+
+        public View(Model model)
+        {
+                this.model = model;
+        }
 
         public void start()
         {
@@ -76,17 +85,17 @@ public class View
                         item.setToolTipText(PROGRAM_NAME);
                         final Menu menu = new Menu(shell, POP_UP);
                         MenuItem openMenuItem = new MenuItem(menu, PUSH);
-                        openMenuItem.setText(TRAY_MENU_OPEN);
+                        openMenuItem.setText(STOP_RSS);
                         openMenuItem.addListener(Selection, new Listener()
                         {
                                 public void handleEvent(Event event)
                                 {
-                                        shell.open();
+                                        model.stopRssThread();
                                 }
                         });
                         MenuItem exitMenuItem = new MenuItem(menu, PUSH);
                         exitMenuItem.setText(TRAY_MENU_EXIT);
-                        exitMenuItem.addListener(SWT.Selection, new Listener()
+                        exitMenuItem.addListener(Selection, new Listener()
                         {
                                 public void handleEvent(Event event)
                                 {
@@ -95,7 +104,7 @@ public class View
                                 }
                         });
 
-                        item.addListener(SWT.MenuDetect, new Listener()
+                        item.addListener(MenuDetect, new Listener()
                         {
                                 public void handleEvent(Event event)
                                 {

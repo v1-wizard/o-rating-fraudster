@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.InputStream;
+import java.util.Date;
 
 import static lombok.AccessLevel.*;
 
@@ -21,4 +22,6 @@ public class Article
         private String section;
         @Getter
         private InputStream image;
+        @Getter
+        private Date pubDate;
 }
