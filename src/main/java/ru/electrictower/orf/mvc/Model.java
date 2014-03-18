@@ -1,5 +1,6 @@
 package ru.electrictower.orf.mvc;
 
+import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
@@ -41,6 +42,7 @@ public class Model
                                                 SyndFeedInput input = new SyndFeedInput();
                                                 SyndFeed feed = input.build(new XmlReader(feedUrl));
                                                 System.out.println(feed);
+                                                SyndEntryImpl lastArticle = (SyndEntryImpl) feed.getEntries().get(0);
                                                 Thread.sleep(10000);
                                         }
                                         catch (Exception e)
