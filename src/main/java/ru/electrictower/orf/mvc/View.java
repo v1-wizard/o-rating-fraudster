@@ -99,6 +99,7 @@ public class View
                         {
                                 public void handleEvent(Event event)
                                 {
+                                        model.stopRssThread();
                                         tray.dispose();
                                         display.dispose();
                                 }

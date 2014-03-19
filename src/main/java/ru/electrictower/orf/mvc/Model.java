@@ -1,6 +1,6 @@
 package ru.electrictower.orf.mvc;
 
-import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
@@ -17,6 +17,7 @@ public class Model
 {
         private volatile boolean rssRun = true;
         private final HttpCore httpCore = new HttpCore();
+        private final ArticleBuilder articleBuilder = new ArticleBuilder();
         @Getter
         private Article lastArticle;
         private boolean isNewArticle;
@@ -41,8 +42,8 @@ public class Model
                                                 URL feedUrl = new URL("http://www.onliner.by/feed");
                                                 SyndFeedInput input = new SyndFeedInput();
                                                 SyndFeed feed = input.build(new XmlReader(feedUrl));
-                                                System.out.println(feed);
-                                                SyndEntryImpl lastArticle = (SyndEntryImpl) feed.getEntries().get(0);
+                                                Article lastArticle = articleBuilder.buildLastArticleFrom(feed);
+                                                System.out.println(lastArticle.toString());
                                                 Thread.sleep(10000);
                                         }
                                         catch (Exception e)
