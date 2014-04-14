@@ -1,7 +1,7 @@
 package ru.electrictower.orf;
 
 import ru.electrictower.orf.mvc.Model;
-import ru.electrictower.orf.mvc.View;
+import ru.electrictower.orf.view.View;
 
 /**
  * Hello world!

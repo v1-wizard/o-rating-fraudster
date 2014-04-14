@@ -21,15 +21,21 @@ public class ArticleBuilder
                 String title = syndEntry.getTitle();
                 String description = extractDescriptionFrom(syndEntry);
                 Date publicationDate = syndEntry.getPublishedDate();
+                String imageUrl = extractImageUrlFrom(syndEntry);
                 String section = ((SyndCategoryImpl) syndEntry.getCategories().get(0)).getName();
-                return new Article(title, description, section, publicationDate);
+                return new Article(title, description, section, publicationDate, imageUrl);
         }
 
         private String extractDescriptionFrom(SyndEntry syndEntry)
         {
                 String syndDescription = syndEntry.getDescription().getValue();
                 String[] tempParts = syndDescription.split(DESCR_TEMP_DELIMITER);
-                return tempParts[DESCR_TEMP_INDEX];
+                return tempParts[DESCR_TEMP_INDEX].replaceAll("<a href=.+\">","").replace("</a>","").replace(".",".\n");
         }
 
+        private String extractImageUrlFrom(SyndEntry syndEntry)
+        {
+            //todo
+              return "http://lurkmore.so/images/thumb/c/ce/124851078928.png/180px-124851078928.png";
+        }
 }

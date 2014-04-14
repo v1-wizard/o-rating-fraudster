@@ -1,6 +1,7 @@
 package ru.electrictower.orf.beans;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -14,6 +15,7 @@ import static lombok.AccessLevel.*;
  */
 @ToString
 @AllArgsConstructor(access = PUBLIC)
+@EqualsAndHashCode
 public class Article
 {
         @Getter
@@ -24,4 +26,8 @@ public class Article
         private String section;
         @Getter
         private Date pubDate;
+        @Getter
+        private String ImageUrl;
+
+
 }
