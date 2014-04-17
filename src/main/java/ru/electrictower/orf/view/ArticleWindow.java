@@ -29,7 +29,8 @@ public class ArticleWindow
     private Label dateLabel;
     private Label descriptionLabel;
     private Label articleImage;
-    private Button hideWindowButton;
+    private Text commentText;
+    private Button closeWindowButton;
     private Button sendMessageButton;
 
 
@@ -46,11 +47,17 @@ public class ArticleWindow
         titleLabel.setLayoutData(rowGridData());
         sectionLabel = new Label(shell, NONE);
         dateLabel = new Label(shell, NONE);
+        dateLabel.setLayoutData(alignmentRightGridData());
         articleImage = new Label(shell, BORDER);
         descriptionLabel = new Label(shell, NONE);
-        hideWindowButton = new Button(shell, PUSH);
-        hideWindowButton.setText(HIDE_BUTTON);
-        hideWindowButton.addSelectionListener(new SelectionAdapter()
+        descriptionLabel.setLayoutData(alignmentRightGridData());
+        commentText = new Text(shell, MULTI & BORDER);
+        commentText.setLayoutData(layoutForTextField());
+        sendMessageButton = new Button(shell, PUSH);
+        sendMessageButton.setText(SEND_BUTTON);
+        closeWindowButton = new Button(shell, PUSH);
+        closeWindowButton.setText(CLOSE_BUTTON);
+        closeWindowButton.addSelectionListener(new SelectionAdapter()
         {
             @Override
             public void widgetSelected(SelectionEvent selectionEvent)
@@ -87,7 +94,7 @@ public class ArticleWindow
     private GridData rowGridData()
     {
         GridData gridData = new GridData();
-        gridData.horizontalSpan = 2;
+        gridData.horizontalSpan = 3;
         gridData.horizontalAlignment = CENTER;
         gridData.grabExcessHorizontalSpace = true;
         gridData.verticalAlignment = FILL;
@@ -95,9 +102,18 @@ public class ArticleWindow
         return gridData;
     }
 
-    private GridData TwoRowGridData()
+    private GridData alignmentRightGridData()
     {
         GridData gridData = new GridData();
+        gridData.horizontalSpan = 2;
+        gridData.horizontalAlignment = RIGHT;
+        return gridData;
+    }
+
+    private GridData layoutForTextField()
+    {
+        GridData gridData = new GridData();
+        gridData.horizontalSpan = 2;
         gridData.verticalSpan = 2;
         gridData.horizontalAlignment = FILL;
         gridData.grabExcessHorizontalSpace = true;
@@ -106,10 +122,9 @@ public class ArticleWindow
         return gridData;
     }
 
-
     private void initGeneralLayout()
     {
-        GridLayout gridLayout = new GridLayout(2, false);
+        GridLayout gridLayout = new GridLayout(3, false);
         shell.setLayout(gridLayout);
     }
 

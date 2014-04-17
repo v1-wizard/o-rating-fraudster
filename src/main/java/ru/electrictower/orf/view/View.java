@@ -2,18 +2,13 @@ package ru.electrictower.orf.view;
 
 import static org.eclipse.swt.SWT.*;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import ru.electrictower.orf.beans.Article;
-import ru.electrictower.orf.mvc.Model;
+import ru.electrictower.orf.model.Model;
 
 import static ru.electrictower.orf.view.DataDictionary.*;
 

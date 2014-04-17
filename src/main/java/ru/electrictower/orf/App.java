@@ -1,6 +1,6 @@
 package ru.electrictower.orf;
 
-import ru.electrictower.orf.mvc.Model;
+import ru.electrictower.orf.model.Model;
 import ru.electrictower.orf.view.View;
 
 /**

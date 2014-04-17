@@ -1,4 +1,4 @@
-package ru.electrictower.orf.mvc;
+package ru.electrictower.orf.model;
 
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -8,8 +8,6 @@ import lombok.extern.log4j.Log4j;
 import ru.electrictower.orf.beans.Article;
 import ru.electrictower.orf.http.HttpCore;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
 /**

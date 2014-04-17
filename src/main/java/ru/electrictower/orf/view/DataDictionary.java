@@ -10,5 +10,6 @@ public class DataDictionary
     public final static String TRAY_MENU_EXIT = "Exit";
     public final static String STOP_RSS = "Stop RSS";
     public final static String START_RSS = "Start RSS";
-    public final static String HIDE_BUTTON = "Hide";
+    public final static String CLOSE_BUTTON = "Close";
+    public final static String SEND_BUTTON = "Send";
 }
