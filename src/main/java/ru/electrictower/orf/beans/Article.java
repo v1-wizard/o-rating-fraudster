@@ -5,10 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.io.InputStream;
 import java.util.Date;
 
-import static lombok.AccessLevel.*;
+import static lombok.AccessLevel.PUBLIC;
 
 /**
  * Created by Wizard on 22.02.14.
@@ -18,16 +17,14 @@ import static lombok.AccessLevel.*;
 @EqualsAndHashCode
 public class Article
 {
-        @Getter
-        private String title;
-        @Getter
-        private String description;
-        @Getter
-        private String section;
-        @Getter
-        private Date pubDate;
-        @Getter
-        private String ImageUrl;
-
-
+    @Getter
+    private String title;
+    @Getter
+    private String description;
+    @Getter
+    private String section;
+    @Getter
+    private Date pubDate;
+    @Getter
+    private String ImageUrl;
 }

@@ -1,7 +1,10 @@
-package ru.electrictower.orf.view;
+package ru.electrictower.orf.ui;
 
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -9,13 +12,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
+import ru.electrictower.orf.Controller;
 import ru.electrictower.orf.beans.Article;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.eclipse.swt.SWT.*;
-import static ru.electrictower.orf.view.DataDictionary.*;
+import static org.eclipse.swt.layout.GridData.FILL_BOTH;
+import static ru.electrictower.orf.ui.DataDictionary.*;
 
 /**
  * @author Aliaksei Boole
@@ -23,6 +28,7 @@ import static ru.electrictower.orf.view.DataDictionary.*;
 public class ArticleWindow
 {
     private Shell shell;
+    private Controller controller;
 
     private Label titleLabel;
     private Label sectionLabel;
@@ -34,37 +40,12 @@ public class ArticleWindow
     private Button sendMessageButton;
 
 
-    public ArticleWindow(Shell parentShell)
+    public ArticleWindow(Shell parentShell, Controller controller)
     {
+        this.controller = controller;
         initShell(parentShell);
         initViewElements();
         initGeneralLayout();
-    }
-
-    private void initViewElements()
-    {
-        titleLabel = new Label(shell, NONE);
-        titleLabel.setLayoutData(rowGridData());
-        sectionLabel = new Label(shell, NONE);
-        dateLabel = new Label(shell, NONE);
-        dateLabel.setLayoutData(alignmentRightGridData());
-        articleImage = new Label(shell, BORDER);
-        descriptionLabel = new Label(shell, NONE);
-        descriptionLabel.setLayoutData(alignmentRightGridData());
-        commentText = new Text(shell, MULTI & BORDER);
-        commentText.setLayoutData(layoutForTextField());
-        sendMessageButton = new Button(shell, PUSH);
-        sendMessageButton.setText(SEND_BUTTON);
-        closeWindowButton = new Button(shell, PUSH);
-        closeWindowButton.setText(CLOSE_BUTTON);
-        closeWindowButton.addSelectionListener(new SelectionAdapter()
-        {
-            @Override
-            public void widgetSelected(SelectionEvent selectionEvent)
-            {
-                shell.dispose();
-            }
-        });
     }
 
     public void show(Article article)
@@ -91,6 +72,53 @@ public class ArticleWindow
         shell.dispose();
     }
 
+    private void initViewElements()
+    {
+        titleLabel = new Label(shell, NONE);
+        titleLabel.setLayoutData(rowGridData());
+        sectionLabel = new Label(shell, NONE);
+        dateLabel = new Label(shell, NONE);
+        dateLabel.setLayoutData(alignmentRightGridData());
+        articleImage = new Label(shell, BORDER);
+        descriptionLabel = new Label(shell, NONE);
+        descriptionLabel.setLayoutData(alignmentRightGridData());
+        commentText = new Text(shell, MULTI | BORDER | WRAP | V_SCROLL);
+        commentText.setLayoutData(layoutForTextField());
+        commentText.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyPressed(KeyEvent keyEvent)
+            {
+                if (keyEvent.character == '\r' && keyEvent.stateMask == SWT.CTRL)
+                {
+                    controller.sendComment(commentText.getText());
+                }
+            }
+        });
+        sendMessageButton = new Button(shell, PUSH);
+        sendMessageButton.setLayoutData(new GridData(FILL));
+        sendMessageButton.setText(SEND_BUTTON);
+        sendMessageButton.addSelectionListener(new SelectionAdapter()
+        {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent)
+            {
+                controller.sendComment(commentText.getText());
+            }
+        });
+        closeWindowButton = new Button(shell, PUSH);
+        closeWindowButton.setText(CLOSE_BUTTON);
+        closeWindowButton.setLayoutData(new GridData(FILL));
+        closeWindowButton.addSelectionListener(new SelectionAdapter()
+        {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent)
+            {
+                shell.dispose();
+            }
+        });
+    }
+
     private GridData rowGridData()
     {
         GridData gridData = new GridData();
@@ -112,7 +140,7 @@ public class ArticleWindow
 
     private GridData layoutForTextField()
     {
-        GridData gridData = new GridData();
+        GridData gridData = new GridData(FILL_BOTH);
         gridData.horizontalSpan = 2;
         gridData.verticalSpan = 2;
         gridData.horizontalAlignment = FILL;

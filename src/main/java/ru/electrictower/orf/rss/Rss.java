@@ -1,4 +1,22 @@
-package ru.electrictower.orf.model;
+/*
+ * Copyright (C) 2005-2014 Alfresco Software Limited.
+ *
+ * This file is part of Alfresco
+ *
+ * Alfresco is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Alfresco is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
+ */
+package ru.electrictower.orf.rss;
 
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -6,7 +24,6 @@ import com.sun.syndication.io.XmlReader;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 import ru.electrictower.orf.beans.Article;
-import ru.electrictower.orf.http.HttpCore;
 
 import java.net.URL;
 
@@ -14,10 +31,9 @@ import java.net.URL;
  * @author Aliaksei Boole
  */
 @Log4j
-public class Model
+public class Rss
 {
     private volatile boolean rssRun = false;
-    private final HttpCore httpCore = new HttpCore();
     private final ArticleBuilder articleBuilder = new ArticleBuilder();
     private volatile Article hotArticle;
     private volatile boolean isHotArticle;
@@ -38,7 +54,7 @@ public class Model
     public void startRssThread()
     {
         rssRun = true;
-        new Thread()
+        Thread rssThread = new Thread()
         {
             @Override
             public void run()
@@ -78,23 +94,13 @@ public class Model
                 }
                 log.info("Rss thread closed.");
             }
-        }.start();
+        };
+        rssThread.setDaemon(true);
+        rssThread.start();
     }
 
     public void stopRssThread()
     {
         rssRun = false;
-    }
-
-    public boolean sendComment()
-    {
-        //TODO
-        return false;
-    }
-
-    public boolean login()
-    {
-        //TODO
-        return false;
     }
 }

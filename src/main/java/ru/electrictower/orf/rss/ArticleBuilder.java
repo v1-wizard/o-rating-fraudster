@@ -1,4 +1,4 @@
-package ru.electrictower.orf.model;
+package ru.electrictower.orf.rss;
 
 import com.sun.syndication.feed.synd.SyndCategoryImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -31,13 +31,17 @@ public class ArticleBuilder
     {
         String syndDescription = syndEntry.getDescription().getValue();
         String[] tempParts = syndDescription.split(DESCR_TEMP_DELIMITER);
-        return tempParts[DESCR_TEMP_INDEX].replaceAll("<a href=.+\">", "").replace("</a>", "").replace(".", ".\n").replaceAll("<.?em>", "");
+        return tempParts[DESCR_TEMP_INDEX].replaceAll("<a href=.+\">", "")
+                .replace("</a>", "")
+                .replace(".", ".\n")
+                .replace("?", "?\n")
+                .replaceAll("<.?em>", "");
     }
 
     private String extractImageUrlFrom(SyndEntry syndEntry)
     {
         String syndDescription = syndEntry.getDescription().getValue();
         String[] tempParts = syndDescription.split(DESCR_TEMP_DELIMITER);
-        return tempParts[IMG_TEMP_INDEX].replaceAll(".+src=\"","").replaceAll("\".+","");
+        return tempParts[IMG_TEMP_INDEX].replaceAll(".+src=\"", "").replaceAll("\".+", "");
     }
 }
