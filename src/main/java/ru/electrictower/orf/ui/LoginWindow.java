@@ -20,9 +20,12 @@ package ru.electrictower.orf.ui;
 
 import lombok.Getter;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
-import static ru.electrictower.orf.ui.DataDictionary.ICON_FILE;
+import static org.eclipse.swt.SWT.*;
+import static ru.electrictower.orf.ui.DataDictionary.*;
 
 /**
  * @author Aliaksei Boole
@@ -44,16 +47,40 @@ public class LoginWindow
     public LoginWindow(Display display)
     {
         initGeneralShell(display);
+        initGeneralLayout();
+        initViewElements();
     }
 
     public void show()
     {
-
+        loginLabel.setText(LOGIN_TEXT);
+        passwordLabel.setText(PASSWORD_TEXT);
+        loginButton.setText(LOGIN_BTN_TEXT);
+        shell.pack();
+        shell.open();
+        shell.forceActive();
     }
 
     private void initViewElements()
     {
-       loginLabel = new Label(shell, 1);
+
+        loginLabel = new Label(shell, NONE);
+        login = new Text(shell, BORDER);
+        passwordLabel = new Label(shell, NONE);
+        password = new Text(shell, PASSWORD | BORDER);
+        loginButton = new Button(shell, PUSH);
+        loginButton.setLayoutData(rowGridData());
+    }
+
+    private GridData rowGridData()
+    {
+        GridData gridData = new GridData();
+        gridData.horizontalSpan = 3;
+        gridData.horizontalAlignment = CENTER;
+        gridData.grabExcessHorizontalSpace = true;
+        gridData.verticalAlignment = FILL;
+        gridData.grabExcessVerticalSpace = true;
+        return gridData;
     }
 
     private void initGeneralShell(Display display)
@@ -63,6 +90,12 @@ public class LoginWindow
                 .getContextClassLoader()
                 .getResourceAsStream(ICON_FILE));
         shell.setImage(image);
+    }
+
+    private void initGeneralLayout()
+    {
+        GridLayout gridLayout = new GridLayout(2, false);
+        shell.setLayout(gridLayout);
     }
 
 }

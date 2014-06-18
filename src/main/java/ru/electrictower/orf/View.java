@@ -28,7 +28,7 @@ public class View
         final Shell generalShell = loginWindow.getShell();
         TrayMenu trayMenu = new TrayMenu(generalShell, controller);
         trayMenu.initTray();
-        generalShell.pack();
+        loginWindow.show();
         while (!generalShell.isDisposed())
         {
             if (!display.readAndDispatch())
