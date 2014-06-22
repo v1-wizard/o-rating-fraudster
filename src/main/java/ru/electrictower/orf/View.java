@@ -23,7 +23,7 @@ public class View
 
     public void start()
     {
-        LoginWindow loginWindow = new LoginWindow(display);
+        LoginWindow loginWindow = new LoginWindow(display, controller);
 
         final Shell generalShell = loginWindow.getShell();
         TrayMenu trayMenu = new TrayMenu(generalShell, controller);
@@ -35,7 +35,7 @@ public class View
             {
                 display.sleep();
             }
-            if (controller.hasHotArticle())
+            if (controller.hasHotArticle() && controller.isLogin())
             {
                 Article hotArticle = controller.getHotArticle();
                 ArticleWindow articleWindow = new ArticleWindow(generalShell, controller);

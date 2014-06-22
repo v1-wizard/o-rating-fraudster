@@ -9,9 +9,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import ru.electrictower.orf.Controller;
 import ru.electrictower.orf.beans.Article;
 
@@ -80,7 +81,7 @@ public class ArticleWindow
         dateLabel = new Label(shell, NONE);
         dateLabel.setLayoutData(alignmentRightGridData());
         articleImage = new Label(shell, BORDER);
-        descriptionLabel = new Label(shell, NONE);
+        descriptionLabel = new Label(shell, LEFT | WRAP);
         descriptionLabel.setLayoutData(alignmentRightGridData());
         commentText = new Text(shell, MULTI | BORDER | WRAP | V_SCROLL);
         commentText.setLayoutData(layoutForTextField());
@@ -135,6 +136,7 @@ public class ArticleWindow
         GridData gridData = new GridData();
         gridData.horizontalSpan = 2;
         gridData.horizontalAlignment = RIGHT;
+        gridData.widthHint = 300;
         return gridData;
     }
 

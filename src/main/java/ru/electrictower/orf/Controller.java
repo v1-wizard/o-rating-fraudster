@@ -10,7 +10,7 @@ import ru.electrictower.orf.rss.Rss;
 @Log4j
 public class Controller
 {
-
+    boolean isLogin = false;    //temp flag
     Rss rss = new Rss();
 
     public boolean hasHotArticle()
@@ -45,12 +45,13 @@ public class Controller
 
     public boolean login(String userName, String password)
     {
+        isLogin = true;
         return true;
     }
 
     public boolean isLogin()
     {
-        return false;
+        return isLogin;
     }
 
     public String getLoginName()

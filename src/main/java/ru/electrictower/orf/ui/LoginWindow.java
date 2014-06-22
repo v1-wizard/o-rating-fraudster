@@ -19,10 +19,13 @@
 package ru.electrictower.orf.ui;
 
 import lombok.Getter;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+import ru.electrictower.orf.Controller;
 
 import static org.eclipse.swt.SWT.*;
 import static ru.electrictower.orf.ui.DataDictionary.*;
@@ -34,6 +37,7 @@ public class LoginWindow
 {
     @Getter
     private Shell shell;
+    private Controller controller;
 
     private Label loginLabel;
     private Label passwordLabel;
@@ -44,8 +48,9 @@ public class LoginWindow
     private Label errorLabel;
 
 
-    public LoginWindow(Display display)
+    public LoginWindow(Display display, Controller controller)
     {
+        this.controller = controller;
         initGeneralShell(display);
         initGeneralLayout();
         initViewElements();
@@ -69,6 +74,15 @@ public class LoginWindow
         passwordLabel = new Label(shell, NONE);
         password = new Text(shell, PASSWORD | BORDER);
         loginButton = new Button(shell, PUSH);
+        loginButton.addSelectionListener(new SelectionAdapter()
+        {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent)
+            {
+                controller.login(login.getText(), password.getText());
+                shell.setVisible(false);
+            }
+        });
         loginButton.setLayoutData(rowGridData());
     }
 

@@ -32,9 +32,7 @@ public class ArticleBuilder
         String syndDescription = syndEntry.getDescription().getValue();
         String[] tempParts = syndDescription.split(DESCR_TEMP_DELIMITER);
         return tempParts[DESCR_TEMP_INDEX].replaceAll("<a href=.+\">", "")
-                .replace("</a>", "")
-                .replace(".", ".\n")
-                .replace("?", "?\n")
+                .replaceAll("</a>", "")
                 .replaceAll("<.?em>", "");
     }
 
