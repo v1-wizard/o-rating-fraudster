@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.electrictower.orf.ui;
+package ru.electrictower.orf.view;
 
 import org.eclipse.swt.widgets.*;
 import ru.electrictower.orf.Controller;
 
 import static org.eclipse.swt.SWT.*;
-import static ru.electrictower.orf.ui.DataDictionary.*;
-import static ru.electrictower.orf.ui.DataDictionary.TRAY_MENU_EXIT;
+import static ru.electrictower.orf.view.DataDictionary.*;
 
 /**
  * @author Aliaksei Boole

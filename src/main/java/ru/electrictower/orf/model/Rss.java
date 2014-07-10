@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.electrictower.orf.rss;
+package ru.electrictower.orf.model;
 
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
 import ru.electrictower.orf.beans.Article;
 
@@ -38,13 +37,11 @@ public class Rss
     private volatile Article hotArticle;
     private volatile boolean isHotArticle;
 
-    @Synchronized
     public boolean hasHotArticle()
     {
         return isHotArticle;
     }
 
-    @Synchronized
     public Article getHotArticle()
     {
         isHotArticle = false;

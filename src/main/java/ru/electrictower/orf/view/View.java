@@ -1,11 +1,9 @@
-package ru.electrictower.orf;
+package ru.electrictower.orf.view;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import ru.electrictower.orf.Controller;
 import ru.electrictower.orf.beans.Article;
-import ru.electrictower.orf.ui.ArticleWindow;
-import ru.electrictower.orf.ui.LoginWindow;
-import ru.electrictower.orf.ui.TrayMenu;
 
 /**
  * @author Aliaksei Boole
@@ -13,8 +11,7 @@ import ru.electrictower.orf.ui.TrayMenu;
 public class View
 {
     private final Display display = new Display();
-
-    private Controller controller;
+    private final Controller controller;
 
     public View(Controller controller)
     {
@@ -35,12 +32,13 @@ public class View
             {
                 display.sleep();
             }
-            if (controller.hasHotArticle() && controller.isLogin())
-            {
-                Article hotArticle = controller.getHotArticle();
-                ArticleWindow articleWindow = new ArticleWindow(generalShell, controller);
-                articleWindow.show(hotArticle);
-            }
+                        if (controller.canShowArticle())
+                        {
+                            Article hotArticle = controller.getHotArticle();
+                            controller.beep();
+                            ArticleWindow articleWindow = new ArticleWindow(generalShell, controller);
+                            articleWindow.show(hotArticle);
+                        }
         }
         display.dispose();
     }

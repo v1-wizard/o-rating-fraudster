@@ -1,4 +1,4 @@
-package ru.electrictower.orf.rss;
+package ru.electrictower.orf.model;
 
 import com.sun.syndication.feed.synd.SyndCategoryImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -24,7 +24,8 @@ public class ArticleBuilder
         Date publicationDate = syndEntry.getPublishedDate();
         String imageUrl = extractImageUrlFrom(syndEntry);
         String section = ((SyndCategoryImpl) syndEntry.getCategories().get(0)).getName();
-        return new Article(title, description, section, publicationDate, imageUrl);
+        String commentUrl = syndEntry.getLink();
+        return new Article(title, description, section, publicationDate, commentUrl, imageUrl);
     }
 
     private String extractDescriptionFrom(SyndEntry syndEntry)

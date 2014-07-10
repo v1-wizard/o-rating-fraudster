@@ -1,4 +1,4 @@
-package ru.electrictower.orf.ui;
+package ru.electrictower.orf.view;
 
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -21,7 +21,7 @@ import java.net.URL;
 
 import static org.eclipse.swt.SWT.*;
 import static org.eclipse.swt.layout.GridData.FILL_BOTH;
-import static ru.electrictower.orf.ui.DataDictionary.*;
+import static ru.electrictower.orf.view.DataDictionary.*;
 
 /**
  * @author Aliaksei Boole
@@ -30,6 +30,7 @@ public class ArticleWindow
 {
     private Shell shell;
     private Controller controller;
+    private Article article;
 
     private Label titleLabel;
     private Label sectionLabel;
@@ -39,6 +40,7 @@ public class ArticleWindow
     private Text commentText;
     private Button closeWindowButton;
     private Button sendMessageButton;
+    private Label statusLabel;
 
 
     public ArticleWindow(Shell parentShell, Controller controller)
@@ -63,14 +65,10 @@ public class ArticleWindow
         {
             e.printStackTrace();
         }
+        this.article = article;
         shell.pack();
         shell.open();
         shell.forceActive();
-    }
-
-    public void close()
-    {
-        shell.dispose();
     }
 
     private void initViewElements()
@@ -92,7 +90,7 @@ public class ArticleWindow
             {
                 if (keyEvent.character == '\r' && keyEvent.stateMask == SWT.CTRL)
                 {
-                    controller.sendComment(commentText.getText());
+                    sendMSG();
                 }
             }
         });
@@ -104,7 +102,7 @@ public class ArticleWindow
             @Override
             public void widgetSelected(SelectionEvent selectionEvent)
             {
-                controller.sendComment(commentText.getText());
+                sendMSG();
             }
         });
         closeWindowButton = new Button(shell, PUSH);
@@ -118,6 +116,8 @@ public class ArticleWindow
                 shell.dispose();
             }
         });
+        statusLabel = new Label(shell, NONE);
+        statusLabel.setLayoutData(rowGridData());
     }
 
     private GridData rowGridData()
@@ -163,6 +163,15 @@ public class ArticleWindow
         shell = new Shell(parentShell, SHELL_TRIM & (~RESIZE) & (~MIN) & (~MAX));
         shell.setText(PROGRAM_NAME);
         shell.setImage(parentShell.getImage());
+    }
+
+    private void sendMSG()
+    {
+        sendMessageButton.setEnabled(false);
+        commentText.setEnabled(false);
+        controller.sendComment(commentText.getText(), article);
+        statusLabel.setText(STATUS_SEND);
+        shell.layout();
     }
 
 }

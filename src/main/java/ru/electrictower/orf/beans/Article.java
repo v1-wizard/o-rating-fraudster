@@ -26,5 +26,8 @@ public class Article
     @Getter
     private Date pubDate;
     @Getter
+    private String commentUrl;
+    @Getter
     private String ImageUrl;
+
 }

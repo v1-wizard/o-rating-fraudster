@@ -2,7 +2,9 @@ package ru.electrictower.orf;
 
 import lombok.extern.log4j.Log4j;
 import ru.electrictower.orf.beans.Article;
-import ru.electrictower.orf.rss.Rss;
+import ru.electrictower.orf.model.Browser;
+import ru.electrictower.orf.model.Rss;
+import ru.electrictower.orf.model.Sound;
 
 /**
  * @author Aliaksei Boole
@@ -10,14 +12,9 @@ import ru.electrictower.orf.rss.Rss;
 @Log4j
 public class Controller
 {
-    boolean isLogin = false;    //temp flag
     Rss rss = new Rss();
-
-    public boolean hasHotArticle()
-    {
-        return rss.hasHotArticle();
-    }
-
+    Browser browser = new Browser();
+    Sound sound = new Sound();
 
     public Article getHotArticle()
     {
@@ -34,28 +31,34 @@ public class Controller
         rss.stopRssThread();
     }
 
-    public boolean sendComment(String comment)
+    public boolean canShowArticle()
     {
-        if (comment != null && !comment.isEmpty())
-        {
-            System.out.println(String.format("Comment[%s] send!", comment));
-        }
-        return false;
+        return browser.isLogin() && rss.hasHotArticle();
     }
 
-    public boolean login(String userName, String password)
+    public void sendComment(String comment, Article article)
     {
-        isLogin = true;
-        return true;
+        browser.sendComment(comment, article);
+    }
+
+    public void login(String userName, String password)
+    {
+        browser.login(userName, password);
+    }
+
+    public String getLoginError()
+    {
+        return browser.getLoginError();
     }
 
     public boolean isLogin()
     {
-        return isLogin;
+        return browser.isLogin();
     }
 
-    public String getLoginName()
+    public void beep()
     {
-        return null;
+        sound.beep();
     }
+
 }

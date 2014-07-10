@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.electrictower.orf.ui;
+package ru.electrictower.orf.view;
 
 import lombok.Getter;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -28,7 +28,8 @@ import org.eclipse.swt.widgets.*;
 import ru.electrictower.orf.Controller;
 
 import static org.eclipse.swt.SWT.*;
-import static ru.electrictower.orf.ui.DataDictionary.*;
+import static org.eclipse.swt.layout.GridData.FILL_BOTH;
+import static ru.electrictower.orf.view.DataDictionary.*;
 
 /**
  * @author Aliaksei Boole
@@ -70,27 +71,61 @@ public class LoginWindow
     {
 
         loginLabel = new Label(shell, NONE);
-        login = new Text(shell, BORDER);
+        login = new Text(shell, BORDER | FILL);
+        login.setLayoutData(layoutForTextField());
         passwordLabel = new Label(shell, NONE);
-        password = new Text(shell, PASSWORD | BORDER);
+        password = new Text(shell, PASSWORD | BORDER | FILL);
+        password.setLayoutData(layoutForTextField());
         loginButton = new Button(shell, PUSH);
         loginButton.addSelectionListener(new SelectionAdapter()
         {
             @Override
             public void widgetSelected(SelectionEvent selectionEvent)
             {
+                login.setEnabled(false);
+                password.setEnabled(false);
+                loginButton.setEnabled(false);
+                errorLabel.setText(WAIT_MESSAGE);
+                shell.layout();
                 controller.login(login.getText(), password.getText());
-                shell.setVisible(false);
+                if (controller.isLogin())
+                {
+                    shell.setVisible(false);
+                    controller.startRssThread();
+                }
+                else
+                {
+                    errorLabel.setText(controller.getLoginError());
+                    login.setEnabled(true);
+                    password.setEnabled(true);
+                    loginButton.setEnabled(true);
+                    shell.layout();
+                }
+
             }
         });
         loginButton.setLayoutData(rowGridData());
+        errorLabel = new Label(shell, NONE);
+        errorLabel.setLayoutData(rowGridData());
     }
 
     private GridData rowGridData()
     {
         GridData gridData = new GridData();
-        gridData.horizontalSpan = 3;
+        gridData.horizontalSpan = 2;
+        gridData.widthHint = 170;
         gridData.horizontalAlignment = CENTER;
+        gridData.grabExcessHorizontalSpace = true;
+        gridData.verticalAlignment = FILL;
+        gridData.grabExcessVerticalSpace = true;
+        return gridData;
+    }
+
+    private GridData layoutForTextField()
+    {
+        GridData gridData = new GridData(FILL_BOTH);
+        gridData.widthHint = 130;
+        gridData.horizontalAlignment = FILL;
         gridData.grabExcessHorizontalSpace = true;
         gridData.verticalAlignment = FILL;
         gridData.grabExcessVerticalSpace = true;
@@ -99,7 +134,8 @@ public class LoginWindow
 
     private void initGeneralShell(Display display)
     {
-        shell = new Shell(display);
+        shell = new Shell(display, TITLE | CLOSE & (~RESIZE));
+        shell.setText(PROGRAM_NAME);
         Image image = new Image(display, Thread.currentThread()
                 .getContextClassLoader()
                 .getResourceAsStream(ICON_FILE));
