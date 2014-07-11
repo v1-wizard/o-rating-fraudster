@@ -65,7 +65,7 @@ public class Rss
                         SyndFeedInput input = new SyndFeedInput();
                         SyndFeed feed = input.build(new XmlReader(feedUrl));
                         Article lastArticle = articleBuilder.buildLastArticleFrom(feed);
-                        if (!lastArticle.equals(hotArticle))
+                        if (hotArticle != null && !lastArticle.equals(hotArticle))
                         {
                             hotArticle = lastArticle;
                             if (log.isDebugEnabled())
@@ -81,7 +81,7 @@ public class Rss
                                 log.debug("No new articles");
                             }
                         }
-                        Thread.sleep(10000);
+                        Thread.sleep(5000);
                     }
                     catch (Exception e)
                     {

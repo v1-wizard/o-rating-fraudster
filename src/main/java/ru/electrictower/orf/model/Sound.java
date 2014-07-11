@@ -21,7 +21,9 @@ package ru.electrictower.orf.model;
 import lombok.extern.log4j.Log4j;
 
 import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Aliaksei Boole
@@ -36,9 +38,10 @@ public class Sound
     {
         try
         {
-            AudioInputStream stream = AudioSystem.getAudioInputStream(Thread.currentThread()
+            InputStream soundFile = Thread.currentThread()
                     .getContextClassLoader()
-                    .getResourceAsStream(SOUND_FILE));
+                    .getResourceAsStream(SOUND_FILE);
+            AudioInputStream stream = AudioSystem.getAudioInputStream(new BufferedInputStream(soundFile));
             DataLine.Info info = new DataLine.Info(Clip.class, stream.getFormat());
             clip = (Clip) AudioSystem.getLine(info);
             clip.open(stream);

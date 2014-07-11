@@ -67,6 +67,19 @@ public class TrayMenu
                     controller.stopRssThread();
                 }
             });
+            MenuItem about = new MenuItem(menu, PUSH);
+            about.setText(TRAY_MENU_ABOUT);
+            about.addListener(Selection, new Listener()
+            {
+                @Override
+                public void handleEvent(Event event)
+                {
+                    MessageBox messageBox = new MessageBox(shell, ICON_INFORMATION | CLOSE);
+                    messageBox.setText(ABOUT_TEXT);
+                    messageBox.setMessage(ABOUT_MESSAGE);
+                    messageBox.open();
+                }
+            });
             MenuItem exitMenuItem = new MenuItem(menu, PUSH);
             exitMenuItem.setText(TRAY_MENU_EXIT);
             exitMenuItem.addListener(Selection, new Listener()
