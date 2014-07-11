@@ -33,9 +33,10 @@ import java.net.URL;
 public class Rss
 {
     private volatile boolean rssRun = false;
-    private final ArticleBuilder articleBuilder = new ArticleBuilder();
     private volatile Article hotArticle;
     private volatile boolean isHotArticle;
+
+    private final ArticleBuilder articleBuilder = new ArticleBuilder();
 
     public boolean hasHotArticle()
     {
@@ -65,7 +66,7 @@ public class Rss
                         SyndFeedInput input = new SyndFeedInput();
                         SyndFeed feed = input.build(new XmlReader(feedUrl));
                         Article lastArticle = articleBuilder.buildLastArticleFrom(feed);
-                        if (hotArticle != null && !lastArticle.equals(hotArticle))
+                        if (!lastArticle.equals(hotArticle))
                         {
                             hotArticle = lastArticle;
                             if (log.isDebugEnabled())
