@@ -26,7 +26,7 @@ public class DataDictionary
     //About alert
     public final static String ABOUT_TEXT = "О программе.";
     public final static String ABOUT_MESSAGE = "Разработанно Пиратской гильдией(для внутреннего пользования).\n" +
-            "Предназначенно для быстрого ответа на свежие статьи(сайт Onliner.by).";
+            "Предназначенно надрочки рейтинга на onliner'е.";
 
     public final static String ICON_FILE = "icon.png";
 }

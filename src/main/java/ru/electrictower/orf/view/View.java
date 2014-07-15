@@ -28,17 +28,17 @@ public class View
         loginWindow.show();
         while (!generalShell.isDisposed())
         {
+            if (controller.canShowArticle())
+            {
+                Article hotArticle = controller.getHotArticle();
+                controller.beep();
+                ArticleWindow articleWindow = new ArticleWindow(generalShell, controller);
+                articleWindow.show(hotArticle);
+            }
             if (!display.readAndDispatch())
             {
                 display.sleep();
             }
-                        if (controller.canShowArticle())
-                        {
-                            Article hotArticle = controller.getHotArticle();
-                            controller.beep();
-                            ArticleWindow articleWindow = new ArticleWindow(generalShell, controller);
-                            articleWindow.show(hotArticle);
-                        }
         }
         display.dispose();
     }

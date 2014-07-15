@@ -12,9 +12,9 @@ import ru.electrictower.orf.model.Sound;
 @Log4j
 public class Controller
 {
-    Rss rss = new Rss();
-    Browser browser = new Browser();
-    Sound sound = new Sound();
+    private final Rss rss = new Rss();
+    private final Browser browser = new Browser();
+    private final Sound sound = new Sound();
 
     public Article getHotArticle()
     {
@@ -36,9 +36,16 @@ public class Controller
         return browser.isLogin() && rss.hasHotArticle();
     }
 
-    public void sendComment(String comment, Article article)
+    public void sendComment(final String comment, final Article article)
     {
-        browser.sendComment(comment, article);
+        new Thread()
+        {
+            @Override
+            public void run()
+            {
+                browser.sendComment(comment, article);
+            }
+        }.start();
     }
 
     public void login(String userName, String password)

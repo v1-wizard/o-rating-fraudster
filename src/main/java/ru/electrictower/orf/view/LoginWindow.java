@@ -95,7 +95,14 @@ public class LoginWindow
                 }
                 else
                 {
-                    errorLabel.setText(controller.getLoginError());
+                    if (login.getText().isEmpty()&& password.getText().isEmpty())
+                    {
+                        errorLabel.setText("Введите логин и пароль.");
+                    }
+                    else
+                    {
+                        errorLabel.setText(controller.getLoginError());
+                    }
                     login.setEnabled(true);
                     password.setEnabled(true);
                     loginButton.setEnabled(true);
