@@ -95,7 +95,7 @@ public class LoginWindow
                 }
                 else
                 {
-                    if (login.getText().isEmpty()&& password.getText().isEmpty())
+                    if (login.getText().isEmpty() && password.getText().isEmpty())
                     {
                         errorLabel.setText("Введите логин и пароль.");
                     }

@@ -11,7 +11,7 @@ import ru.electrictower.orf.beans.Article;
 public class View
 {
     private final Display display = new Display();
-    private final Controller controller;
+    private Controller controller;
 
     public View(Controller controller)
     {
@@ -30,10 +30,17 @@ public class View
         {
             if (controller.canShowArticle())
             {
-                Article hotArticle = controller.getHotArticle();
-                controller.beep();
-                ArticleWindow articleWindow = new ArticleWindow(generalShell, controller);
-                articleWindow.show(hotArticle);
+                display.syncExec(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Article hotArticle = controller.getHotArticle();
+                        controller.beep();
+                        ArticleWindow articleWindow = new ArticleWindow(generalShell, controller);
+                        articleWindow.show(hotArticle);
+                    }
+                });
             }
             if (!display.readAndDispatch())
             {
@@ -43,4 +50,8 @@ public class View
         display.dispose();
     }
 
+    public void wake()
+    {
+        display.wake();
+    }
 }

@@ -1,20 +1,28 @@
 package ru.electrictower.orf;
 
-import lombok.extern.log4j.Log4j;
 import ru.electrictower.orf.beans.Article;
 import ru.electrictower.orf.model.Browser;
 import ru.electrictower.orf.model.Rss;
 import ru.electrictower.orf.model.Sound;
+import ru.electrictower.orf.view.View;
 
 /**
  * @author Aliaksei Boole
  */
-@Log4j
 public class Controller
 {
-    private final Rss rss = new Rss();
-    private final Browser browser = new Browser();
-    private final Sound sound = new Sound();
+    private final Browser browser;
+    private final Sound sound;
+    private final Rss rss;
+    private final View view;
+
+    public Controller()
+    {
+        view = new View(this);
+        rss = new Rss(this);
+        sound = new Sound();
+        browser = new Browser();
+    }
 
     public Article getHotArticle()
     {
@@ -66,6 +74,16 @@ public class Controller
     public void beep()
     {
         sound.beep();
+    }
+
+    public void wakeUpUI()
+    {
+        view.wake();
+    }
+
+    public void start()
+    {
+        view.start();
     }
 
 }

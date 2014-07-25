@@ -66,10 +66,10 @@ public class ArticleWindow
             e.printStackTrace();
         }
         this.article = article;
-        shell.getDisplay().wake();
         shell.pack();
         shell.open();
         shell.forceActive();
+        shell.forceFocus();
     }
 
     private void initViewElements()

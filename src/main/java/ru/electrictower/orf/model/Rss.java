@@ -21,7 +21,7 @@ package ru.electrictower.orf.model;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import lombok.extern.log4j.Log4j;
+import ru.electrictower.orf.Controller;
 import ru.electrictower.orf.beans.Article;
 
 import java.net.URL;
@@ -29,7 +29,6 @@ import java.net.URL;
 /**
  * @author Aliaksei Boole
  */
-@Log4j
 public class Rss
 {
     private volatile boolean rssRun = false;
@@ -37,6 +36,12 @@ public class Rss
     private volatile boolean isHotArticle;
 
     private final ArticleBuilder articleBuilder = new ArticleBuilder();
+    private final Controller controller;
+
+    public Rss(Controller controller)
+    {
+        this.controller = controller;
+    }
 
     public boolean hasHotArticle()
     {
@@ -57,7 +62,6 @@ public class Rss
             @Override
             public void run()
             {
-                log.info("RssThread started.");
                 while (rssRun)
                 {
                     try
@@ -69,28 +73,16 @@ public class Rss
                         if (!lastArticle.equals(hotArticle))
                         {
                             hotArticle = lastArticle;
-                            if (log.isDebugEnabled())
-                            {
-                                log.debug(hotArticle.toString());
-                            }
                             isHotArticle = true;
-                        }
-                        else
-                        {
-                            if (log.isDebugEnabled())
-                            {
-                                log.debug("No new articles");
-                            }
+                            controller.wakeUpUI();
                         }
                         Thread.sleep(5000);
                     }
                     catch (Exception e)
                     {
-                        log.error("RssThread error.", e);
                         rssRun = false;
                     }
                 }
-                log.info("Rss thread closed.");
             }
         };
         rssThread.setDaemon(true);

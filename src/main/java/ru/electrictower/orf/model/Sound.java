@@ -18,8 +18,6 @@
  */
 package ru.electrictower.orf.model;
 
-import lombok.extern.log4j.Log4j;
-
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -28,7 +26,6 @@ import java.io.InputStream;
 /**
  * @author Aliaksei Boole
  */
-@Log4j
 public class Sound
 {
     private final static String SOUND_FILE = "beep.wav";
@@ -48,7 +45,7 @@ public class Sound
         }
         catch (LineUnavailableException | IOException | UnsupportedAudioFileException e)
         {
-            log.error("Can't play music", e);
+            System.exit(-1);
         }
     }
 
